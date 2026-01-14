@@ -3,6 +3,10 @@
 lib파일 뽑기 bat 파일 소스코드
 실행은 bash말고 윈도우라 cmd에서 사용
 
+```
+.\build_android.bat
+```
+
 
 bat 파일 소스코드
 ```@echo off
