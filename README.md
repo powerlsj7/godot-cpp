@@ -1,3 +1,80 @@
+#
+
+lib파일 뽑기 bat 파일 소스코드
+실행은 bash말고 윈도우라 cmd에서 사용
+
+이거는 4가지 명령어
+```
+Bash
+
+scons platform=android target=template_debug arch=arm64 arch=arm32 -j11
+[릴리즈 세트]
+
+Bash
+
+scons platform=android target=template_release arch=arm64 arch=arm32 -j11
+2. 에뮬레이터용 (x86 64비트 + 32비트)
+
+
+[디버그 세트]
+
+Bash
+
+scons platform=android target=template_debug arch=x86_64 arch=x86 -j11
+[릴리즈 세트]
+
+Bash
+
+scons platform=android target=template_release arch=x86_64 arch=x86 -j11
+```
+
+bat 파일 소스코드
+```@echo off
+setlocal enabledelayedexpansion
+
+echo ======================================================
+echo 🚀 Start All-in-One Android Build (64bit + 32bit)
+echo ======================================================
+
+:: 1. ARM 64/32비트 디버그 세트
+echo [1/4] Building ARM (64+32) Debug...
+call scons platform=android target=template_debug arch=arm64 arch=arm32 -j11
+if %errorlevel% neq 0 goto :error
+
+:: 2. ARM 64/32비트 릴리즈 세트
+echo [2/4] Building ARM (64+32) Release...
+call scons platform=android target=template_release arch=arm64 arch=arm32 -j11
+if %errorlevel% neq 0 goto :error
+
+:: 3. x86 64/32비트 디버그 세트
+echo [3/4] Building x86 (64+32) Debug...
+call scons platform=android target=template_debug arch=x86_64 arch=x86 -j11
+if %errorlevel% neq 0 goto :error
+
+:: 4. x86 64/32비트 릴리즈 세트
+echo [4/4] Building x86 (64+32) Release...
+call scons platform=android target=template_release arch=x86_64 arch=x86 -j11
+if %errorlevel% neq 0 goto :error
+
+echo ======================================================
+echo ✅ All Android Binaries Built Successfully!
+echo ======================================================
+pause
+exit /b 0
+
+:error
+echo.
+echo ❌ [ERROR] Build failed! Check the logs above.
+pause
+exit /b 1
+```
+
+
+
+
+
+
+
 # godot-cpp
 
 > [!WARNING]
