@@ -3,44 +3,34 @@
 lib파일 뽑기 bat 파일 소스코드
 실행은 bash말고 윈도우라 cmd에서 사용
 
-이거는 명령어 다뽑기
-```
-:: 1. 디버그 세트 (모든 아키텍처 한꺼번에)
-scons platform=android target=template_debug arch=arm64 arch=arm32 arch=x86_64 arch=x86_32 -j11
-
-:: 2. 릴리즈 세트 (모든 아키텍처 한꺼번에)
-scons platform=android target=template_release arch=arm64 arch=arm32 arch=x86_64 arch=x86_32 -j11
-```
 
 bat 파일 소스코드
 ```@echo off
 setlocal enabledelayedexpansion
 
 echo ======================================================
-echo 🚀 Start All-in-One Android Build (64bit + 32bit)
+echo 🚀 Start All-in-One Android Build (8 Files Total)
 echo ======================================================
 
-:: 1. 디버그 세트 (모든 아키텍처 한꺼번에)
-echo [Phase 1] Building All Debug Targets...
-call scons platform=android target=template_debug arch=arm64 arch=arm32 arch=x86_64 arch=x86_32 -j11
-if %errorlevel% neq 0 goto :error
+:: --- [1] DEBUG SET (4개) ---
+echo Building Debug: arm64, arm32, x86_64, x86_32...
+call scons platform=android target=template_debug arch=arm64 -j11
+call scons platform=android target=template_debug arch=arm32 -j11
+call scons platform=android target=template_debug arch=x86_64 -j11
+call scons platform=android target=template_debug arch=x86_32 -j11
 
-:: 2. 릴리즈 세트 (모든 아키텍처 한꺼번에)
-echo [Phase 2] Building All Release Targets...
-call scons platform=android target=template_release arch=arm64 arch=arm32 arch=x86_64 arch=x86_32 -j11
-if %errorlevel% neq 0 goto :error
+:: --- [2] RELEASE SET (4개) ---
+echo Building Release: arm64, arm32, x86_64, x86_32...
+call scons platform=android target=template_release arch=arm64 -j11
+call scons platform=android target=template_release arch=arm32 -j11
+call scons platform=android target=template_release arch=x86_64 -j11
+call scons platform=android target=template_release arch=x86_32 -j11
 
 echo ======================================================
-echo ✅ All Android Binaries Built Successfully!
+echo ✅ All 8 Android Binaries Built Successfully!
 echo ======================================================
 pause
 exit /b 0
-
-:error
-echo.
-echo ❌ [ERROR] Build failed! Check the logs above.
-pause
-exit /b 1
 ```
 
 
